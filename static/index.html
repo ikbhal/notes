@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue Notes App</title>
+  <!-- Include Tailwind CSS from CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+  <div id="app" class="container mx-auto p-4">
+    <div class="bg-blue-500 text-white p-4 mb-4">
+      <h1 class="text-2xl font-bold">Vue Notes App</h1>
+      <p class="mt-2">Add, edit, and delete notes using this simple Vue.js app.</p>
+    </div>
+
+    <div class="mb-4">
+      <input type="text" v-model="newNote.title" placeholder="Note Title" class="border rounded-lg p-2 mr-2">
+      <textarea v-model="newNote.content" placeholder="Note Content" class="border rounded-lg p-2"></textarea>
+      <button @click="addNote" class="bg-blue-500 text-white p-2 rounded-lg">Add Note</button>
+    </div>
+
+    <div v-if="notes.length > 0">
+      <ul class="list-disc list-inside">
+        <li v-for="(note, index) in notes" :key="index" class="mb-4">
+          <div v-if="editedNote === index">
+            <input v-model="note.title" class="border rounded-lg p-2 mr-2">
+            <textarea v-model="note.content" class="border rounded-lg p-2"></textarea>
+            <button @click="saveEdit" class="bg-green-500 text-white p-2 rounded-lg mr-2">Save</button>
+            <button @click="cancelEdit" class="bg-gray-500 text-white p-2 rounded-lg">Cancel</button>
+          </div>
+          <div v-else>
+            <h2 class="text-lg font-bold">{{ note.title }}</h2>
+            <p class="mt-2">{{ note.content }}</p>
+            <div>
+              <button @click="editNote(index)" class="bg-yellow-500 text-white p-2 rounded-lg mr-2">Edit</button>
+              <button @click="deleteNote(index)" class="bg-red-500 text-white p-2 rounded-lg">Delete</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div v-else>
+      <p>No notes found. Add a note to get started!</p>
+    </div>
+  </div>
+
+  <!-- Include Vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+  <!-- Include your app.js script (if you have app.js file) -->
+  <script src="app.js"></script>
+</body>
+</html>
